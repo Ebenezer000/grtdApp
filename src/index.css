@@ -1,86 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-*{
-  margin: 0;
-  padding: 0;
-}
-body{
-  font-family: 'Sora', sans-serif; 
-  position: relative; 
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.rgba{
-  border-radius: 4px;
-background: rgba(163, 163, 163, 0.24)
-}
-.home_rgba{
-  border: 0.6px solid var(--grey-800, #292929);
-  background: var(--grey-950, #0C0C0C);
-}
-.slide-animation{
-  animation:slide-down 100ms ease-out forwards;
-  transform:translateY(-20px);
-  position:absolute;
-}
-.slide-animation-up{
-  animation:slide-up 50ms ease-in forwards;
-  transform:translateY(-20px);
-}
-
-@keyframes slide-down{
-  0%{
-    opacity:0;
-    transform:translateY(-20px);
-  }
-
-  100%{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-}
-
-@keyframes slide-up{
-  0%{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-  100%{
-    opacity:0;
-    transform:translateY(-50px);
-  }
-
-}
-
-::-webkit-scrollbar {
-  width: 2px;
-  background:transparent;
-}
-
-/* Track */
-::-webkit-scrollbar-track { 
-  border-radius: 10px;
-}
- 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: transparent; 
-  border-radius:20px;
-  height:10px;
-}
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-  -webkit-appearance:none;
-  margin:0;
 }
 
 code {

@@ -1,7 +1,6 @@
 .App {
-
   text-align: center;
-  margin-top: 10%;
+  margin-top: 5%;
   display: flex;
   justify-content: center;
   border: #282c34;
@@ -67,6 +66,19 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.network_logo {
+  text-align: center;
+  justify-content: center;
+  max-width: 50px;
+  width: 100%;
+  margin: auto;
+}
+
+.dropdown {
+  width: 15em;
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
