@@ -1,13 +1,15 @@
 .App {
+
   text-align: center;
-  margin: auto;
+  margin-top: 10%;
   display: flex;
+  justify-content: center;
   border: #282c34;
   border-width: 1rem;
 }
 
 .AppContainer {
-  margin: auto;
+  padding: 30px;
 }
 
 .App-logo {
@@ -36,7 +38,8 @@
 }
 
 .Info-Status {
-  width: 90%;
+  width: 100%;
+  padding: 20px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;

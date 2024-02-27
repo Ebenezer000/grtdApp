@@ -7,7 +7,7 @@ export const send_eth_signTypedData_v4 = async (provider: SDKProvider, chainId: 
       // Defining the chain aka Rinkeby testnet or Ethereum Main Net
       chainId: chainId,
       // Give a user-friendly name to the specific contract you are signing for.
-      name: 'Ether Mail',
+      name: 'GRTD Mail',
       // If name isn't enough add verifying contract to make sure you are establishing contracts with the proper entity
       verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
       // Just lets you know the latest version. Definitely make sure the field name is correct.
@@ -15,25 +15,8 @@ export const send_eth_signTypedData_v4 = async (provider: SDKProvider, chainId: 
     },
 
     message: {
-      contents: 'Hello, Bob!',
+      contents: 'Hello Please sign this to continue the sign up process!',
       attachedMoneyInEth: 4.2,
-      from: {
-        name: 'Cow',
-        wallets: [
-          '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
-          '0xDeaDbeefdEAdbeefdEadbEEFdeadbeEFdEaDbeeF',
-        ],
-      },
-      to: [
-        {
-          name: 'Bob',
-          wallets: [
-            '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-            '0xB0BdaBea57B0BDABeA57b0bdABEA57b0BDabEa57',
-            '0xB0B0b0b0b0b0B000000000000000000000000000',
-          ],
-        },
-      ],
     },
     // Refers to the keys of the *types* object below.
     primaryType: 'Mail',

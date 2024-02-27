@@ -1,5 +1,5 @@
 import { useSDK } from '@metamask/sdk-react';
-import React, { useState, useMemo} from 'react';
+import React, { useState, useMemo, useEffect} from 'react';
 import './App.css';
 import { send_eth_signTypedData_v4, send_personal_sign } from './SignHelpers';
 import web3 from "web3";
@@ -24,7 +24,14 @@ interface networkInterface {
 export const App = () => {
 
   const [activeNetwork, setActiveNetwork] = useState<string>("");
+  const [activeBalance, setActiveBalance] = useState<string>("");
+  const [response, setResponse] = useState<unknown>('');
+  const { sdk, connected, connecting, provider, chainId, account, balance } = useSDK();
 
+  function loadBaseBalance() {
+    const bal = web3.utils.fromWei(String(web3.utils.toBigInt(balance)),"ether")
+    setActiveBalance(bal)
+  }
 
   const changeNetwork = async (network: networkInterface) => {
     console.debug(`switching to ${network.chainName} with chainId=${network.chainId}`);
@@ -38,6 +45,11 @@ export const App = () => {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    loadBaseBalance();
+  }, [account, chainId]);
+
 
   useMemo(() => {
     if (activeNetwork === "Polygon") {
@@ -69,28 +81,10 @@ export const App = () => {
     { value: "Avalanche", label: "Avalanche" },
   ];
 
-  const [response, setResponse] = useState<unknown>('');
-  const { sdk, connected, connecting, provider, chainId, account, balance } = useSDK();
-
-  const languages = sdk?.availableLanguages ?? ['en'];
-
-  const [currentLanguage, setCurrentLanguage] = useState(
-    localStorage.getItem('MetaMaskSDKLng') || 'en',
-  );
-
-  const changeLanguage = async (currentLanguage: string) => {
-    localStorage.setItem('MetaMaskSDKLng', currentLanguage);
-    window.location.reload();
-  };
-
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    setCurrentLanguage(event.target.value);
-
-    changeLanguage(event.target.value).then(() => {
-      console.debug(`language changed to ${event.target.value}`);
-    });
+    
   };
 
   const connectAndSign = async () => {
@@ -184,10 +178,11 @@ export const App = () => {
     <div className="App">
       <div className='AppContainer'>
         <h1>GRTD APP</h1>
+        <br/>
         <div className={"Info-Status"}>
           <p className='text-lg'>{`Connected chain: ${chainId}`}</p>
           <p>{`Connected account: ${account}`}</p>
-          <p>{`Account balance: ${balance}`}</p>
+          <p>{`Account balance: ${activeBalance}`}</p>
           <p>{`Last request response: ${response}`}</p>
           <p>{`Connected: ${connected}`}</p>
         </div>
@@ -275,16 +270,16 @@ export const App = () => {
               style={{ padding: 10, margin: 10 }}
               onClick={eth_signTypedData_v4}
             >
-              eth_signTypedData_v4
+              Sign Up
             </button>
 
-            <button
+            {/* <button
               className={'Button-Normal'}
               style={{ padding: 10, margin: 10 }}
               onClick={eth_personal_sign}
             >
               personal_sign
-            </button>
+            </button> */}
 
             <button
               className={'Button-Danger'}
