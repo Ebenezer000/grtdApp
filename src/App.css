@@ -78,7 +78,11 @@
 
 .dropdown {
   width: 15em;
+  height: 3em;
+  border-radius: 0.5em;
+  font-weight: 600;
   text-align: center;
+  border: 1px solid blueviolet;
 }
 
 @keyframes App-logo-spin {

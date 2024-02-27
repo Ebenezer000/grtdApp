@@ -51,11 +51,11 @@ export const Home = () => {
 
 
     useEffect(() => {
-        if (activeNetwork === "Polygon") {
-            switchChain?.({ chainId: 80001 });
-        }
         if (activeNetwork === "Optimism") {
             switchChain?.({ chainId: 10 });
+        }
+        if (activeNetwork === "Polygon") {
+            switchChain?.({ chainId: 137 });
         }
         if (activeNetwork === "Avalanche") {
             switchChain?.({ chainId: 43114 });
@@ -72,7 +72,7 @@ export const Home = () => {
         if (activeNetwork === "Klaytn") {
             switchChain?.({ chainId: 8217 });
         }
-    }, [chainId, setActiveNetwork]);
+    }, [chainId,activeNetwork, setActiveNetwork]);
 
     const NetworkOptions = [
         { value: "Polygon", label: "Polygon" },
@@ -86,8 +86,6 @@ export const Home = () => {
   return (
     <div className="App">
       <div className='AppContainer'>
-        <h1>GRTD APP</h1>
-        <br/>
         <div className={"Info-Status"}>
           <p className='text-lg'>{`Connected chain: ${chainId}`}</p>
           <p>{`Connected account: ${address}`}</p>
