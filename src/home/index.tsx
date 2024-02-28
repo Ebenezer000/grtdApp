@@ -88,115 +88,107 @@ export const Home = () => {
   return (
     <div className="App">
       <div className='AppContainer'>
-        <div className={"Info-Status"}>
-          <p>{`Connected chain: ${chainId}`}</p>
-          <p>{`Connected account: ${address}`}</p>
-          <p>{`Account balance: ${balance}`}</p>
-          <p>{`Last request response: ${response}`}</p>
-          <p>{`Connected: ${isConnected}`}</p>
-        </div>
-
-        <div>
-          {activeNetwork === "Avalanche" ? (
-              <img
-              className="network_logo"
-                src={avalanche}
-                alt=""
-              />
-            ) : activeNetwork === "Polygon" ? (
-              <img
-                src={polygon}
-                className="network_logo"
-                alt=""
-              />
-            ) : activeNetwork === "Binance" ? (
-              <img
-                src={bnb}
-                className="network_logo"
-                alt=""
-              />
-            ): activeNetwork === "Arbitrum" ? (
-              <img
-                src={arbitrum}
-                className="network_logo"
-                alt=""
-              />
-            ): activeNetwork === "Optimism" ? (
-              <img
-                src={optimism}
-                className="network_logo"
-                alt=""
-              />
-            ) : activeNetwork === "Klaytn" ? (
-              <img
-                src={klaytn}
-                className="network_logo"
-                alt=""
-              />
-            ) : activeNetwork === "Fantom" ? (
-              <img
-                src={fantom}
-                className="network_logo"
-                alt=""
-              />
-            ) : (
-              activeNetwork === "" && ""
-            )}
-            
-            <div>
-                <select
-                name="activeNetwork"
-                className='dropdown'
-                onChange={(e) => {
-                    setActiveNetwork(e.target.value);
-                }}>
-                <option value="">Select Network</option>
-                {NetworkOptions.map((option, index) => (
-                    <option
-                    key={index}
-                    value={option!.value}
-                    className="text-black">
-                    {option!.label}
-                    </option>
-                ))}
-                </select>
-            </div>
-        </div> 
-        
         {isConnected ? (
-          <div>
-          
-            <button
-              className={'Button-Normal'}
-              style={{ padding: 10, margin: 10 }}
-              onClick={() => signMessage({account: address,  message: "Welcome to GRTD please sign to continue"})}
-            >
-              Sign Up
-            </button>
+            <div>
+                <div className={"Info-Status"}>
+                <p>{`Connected chain: ${chainId}`}</p>
+                <p>{`Connected account: ${address}`}</p>
+                <p>{`Account balance: ${balance}`}</p>
+                <p>{`Last request response: ${response}`}</p>
+                <p>{`Connected: ${isConnected}`}</p>
+                </div>
 
-            {/* <button
-              className={'Button-Normal'}
-              style={{ padding: 10, margin: 10 }}
-              onClick={eth_personal_sign}
-            >
-              personal_sign
-            </button> */}
+                <div>
+                {activeNetwork === "Avalanche" ? (
+                    <img
+                    className="network_logo"
+                        src={avalanche}
+                        alt=""
+                    />
+                    ) : activeNetwork === "Polygon" ? (
+                    <img
+                        src={polygon}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ) : activeNetwork === "Binance" ? (
+                    <img
+                        src={bnb}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ): activeNetwork === "Arbitrum" ? (
+                    <img
+                        src={arbitrum}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ): activeNetwork === "Optimism" ? (
+                    <img
+                        src={optimism}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ) : activeNetwork === "Klaytn" ? (
+                    <img
+                        src={klaytn}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ) : activeNetwork === "Fantom" ? (
+                    <img
+                        src={fantom}
+                        className="network_logo"
+                        alt=""
+                    />
+                    ) : (
+                    activeNetwork === "" && ""
+                    )}
+                    
+                    <div>
+                        <select
+                        name="activeNetwork"
+                        className='dropdown'
+                        onChange={(e) => {
+                            setActiveNetwork(e.target.value);
+                        }}>
+                        <option value="">Select Network</option>
+                        {NetworkOptions.map((option, index) => (
+                            <option
+                            key={index}
+                            value={option!.value}
+                            className="text-black">
+                            {option!.label}
+                            </option>
+                        ))}
+                        </select>
+                    </div>
+                </div> 
+            
+                <div>
+                
+                <button
+                    className={'Button-Normal'}
+                    style={{ padding: 10, margin: 10 }}
+                    onClick={() => signMessage({account: address,  message: "Welcome to GRTD please sign to continue"})}
+                >
+                    Sign Up
+                </button>
 
-            <button
-              className={'Button-Danger'}
-              style={{ padding: 10, margin: 10 }}
-              onClick={() => open({ view: 'Account' })}>
-              Disconnect
-            </button>
-          </div>
-
-
+                <button
+                    className={'Button-Danger'}
+                    style={{ padding: 10, margin: 10 }}
+                    onClick={() => open({ view: 'Account' })}>
+                    Disconnect
+                </button>
+                </div>
+            </div>
         ) : (
-          <div>
-            <button className={'Button-Normal'} style={{ padding: 10, margin: 10 }} onClick={() => open({ view: 'Networks' })}>
-              Connect
-            </button>
-          </div>
+            <div className='button_cover'>
+              <button className={'button-connect'} style={{ padding: 10, margin: 10 }} onClick={() => open({ view: 'Networks' })}>
+                Connect
+              </button>
+            </div>
         )}
       </div>
     </div>
