@@ -81,6 +81,7 @@ export const Home = () => {
         { value: "Arbitrum", label: "Arbitrum" },
         { value: "Fantom", label: "Fantom" },
         { value: "Optimism", label: "Optimism" },
+        { value: "Klaytn", label: "Klaytn" },
         { value: "Avalanche", label: "Avalanche" },
     ];
 
