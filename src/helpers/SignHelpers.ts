@@ -1,5 +1,5 @@
 
-export const msgParams = {
+export const msgParams =  JSON.stringify({
   types: {
     Person: [
       { name: 'name', type: 'string' },
@@ -23,4 +23,4 @@ export const msgParams = {
     },
     contents: 'Hello, Bob!',
   },
-  };
+  });

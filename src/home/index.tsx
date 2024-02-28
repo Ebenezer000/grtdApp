@@ -17,6 +17,7 @@ import arbitrum from "../images/arbitrum.png";
 import optimism from "../images/optimism.png";
 import klaytn from "../images/klaytn.png";
 import fantom from "../images/fantom.png";
+import web3 from 'web3';
 
 export const Home = () => {
 
@@ -87,7 +88,7 @@ export const Home = () => {
     <div className="App">
       <div className='AppContainer'>
         <div className={"Info-Status"}>
-          <p className='text-lg'>{`Connected chain: ${chainId}`}</p>
+          <p>{`Connected chain: ${chainId}`}</p>
           <p>{`Connected account: ${address}`}</p>
           <p>{`Account balance: ${balance}`}</p>
           <p>{`Last request response: ${response}`}</p>
@@ -167,7 +168,7 @@ export const Home = () => {
             <button
               className={'Button-Normal'}
               style={{ padding: 10, margin: 10 }}
-              onClick={() => signMessage({account: address,  message: 'hello world' })}
+              onClick={() => signMessage({account: address,  message: "Welcome to GRTD please sign to continue"})}
             >
               Sign Up
             </button>

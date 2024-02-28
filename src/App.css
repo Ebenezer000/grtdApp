@@ -5,10 +5,11 @@
   justify-content: center;
   border: #282c34;
   border-width: 1rem;
+  width: 100%;
 }
 
 .AppContainer {
-  padding: 30px;
+  width:auto;
 }
 
 .App-logo {
@@ -37,10 +38,8 @@
 }
 
 .Info-Status {
-  width: 100%;
+  width: auto;
   padding: 20px;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 2rem;
   border-radius: 5px;
   border: 1px solid blueviolet;
@@ -82,6 +81,8 @@
   border-radius: 0.5em;
   font-weight: 600;
   text-align: center;
+  align-items: center;
+  justify-content: center;
   border: 1px solid blueviolet;
 }
 
