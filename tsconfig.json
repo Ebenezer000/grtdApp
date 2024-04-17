@@ -10,7 +10,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -21,9 +21,6 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src/**.ts",
-    "**.js",
-    "src/**.js",
-    "src/**.tsx"
-, "src/helpers/SignHelpers.ts"  ]
+    "src"
+  ]
 }

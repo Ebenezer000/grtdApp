@@ -1,75 +1,10 @@
 .App {
   text-align: center;
-  margin-top: 5%;
-  display: flex;
-  justify-content: center;
-  border: #282c34;
-  border-width: 1rem;
-  width: 100%;
-}
-
-.AppContainer {
-  display: flex;
-  justify-content: center;
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
-}
-
-.Button-Normal {
-  background-color: blueviolet;
-  border: 1px solid blueviolet;
-  color: white;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  
-}
-
-.button_cover{
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-.button-connect {
-  background-color: blueviolet;
-  border: 1px solid blueviolet;
-  color: white;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 50%;
-}
-
-.Button-Danger {
-  background-color: red;
-  border-color: red;
-  color: white;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-.Info-Status {
-  width: auto;
-  padding: 20px;
-  margin-bottom: 2rem;
-  border-radius: 5px;
-  border: 1px solid blueviolet;
-  background-color: aliceblue;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -91,25 +26,6 @@
 
 .App-link {
   color: #61dafb;
-}
-
-.network_logo {
-  text-align: center;
-  justify-content: center;
-  max-width: 50px;
-  width: 100%;
-  margin: auto;
-}
-
-.dropdown {
-  width: 15em;
-  height: 3em;
-  border-radius: 0.5em;
-  font-weight: 600;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid blueviolet;
 }
 
 @keyframes App-logo-spin {
