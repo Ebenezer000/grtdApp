@@ -42,6 +42,10 @@ function App(){
                                         authCode={authCode}
                                     />}
                                 />
+                                <Route path="/add" element={
+                                    <AddMembers
+                                    />}
+                                />
                             </Routes>
                     </SLanding>
                 </SContent>
@@ -64,26 +68,8 @@ const SContent = styled(Wrapper)`
   padding: 0 16px;
 `;
 
-const SContainer = styled.div`
-  height: 100%;
-  min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  word-break: break-word;
-`;
-
 const SLanding = styled(Column)`
   height: 600px;
-`;
-
-// @ts-ignore
-const SBalances = styled(SLanding)`
-  height: 100%;
-  & h3 {
-    padding-top: 30px;
-  }
 `;
 
 export default App;

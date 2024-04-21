@@ -1,9 +1,8 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Loader from '../components/Loader';
-import Scrapping from '../components/completed';
 
 const types = ['SCRAPE MEMBERS', 'ADD MEMBERS'];
 
@@ -29,6 +28,8 @@ interface UserBulkData{
 
 function ScrapeModal(props: ScrapProps) {
 
+    const navigate = useNavigate()
+    
     const [active, setActive] = useState(types[0]);
     const [groupIds, setGroupIds] = useState<Number>(0)
     const [ownGroupIds, setOwnGroupIds] = useState<Number>(0)
@@ -36,9 +37,10 @@ function ScrapeModal(props: ScrapProps) {
     const [allUsers, setAllUsers] = useState<UserBulkData[]>();
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isFetched, setIsFetched] = useState<boolean>(true)
-    const [isFinalApiLoading, setIsFinalApiLoading] = useState<boolean>(true)
-    const [isFinalLoading, setIsFinalLoading] = useState<boolean>(true)
+
     const [isScraping, setIsScraping] = useState<boolean>(true)
+    
+    const [isAdding, setIsAdding] = useState<boolean>(true)
 
 
     const addGroupId = (groupId: number) => {
@@ -65,25 +67,29 @@ function ScrapeModal(props: ScrapProps) {
         
     }
 
-    const addAllRequestedMembers = async () => {
-        setIsScraping(false)
+    const scrapeAllMembers = async () => {
         try {
-            setIsFinalLoading(true)
+            setIsScraping(false)
             const allUsersList = await axios.post(`https://grtdinterface.onrender.com/scrape`, { channel_id: groupIds },
             { headers: { "Content-Type": "application/json" }})
-            setIsLoading(false)
             setAllUsers(allUsersList?.data)
-          try {
-            setIsFinalApiLoading(true)
-            await axios.post(`https://grtdinterface.onrender.com/add`, { channel_id: ownGroupIds, users: allUsers },
-            { headers: { "Content-Type": "application/json" }})
-            setIsFinalApiLoading(false)
-          } catch (error) {
-              alert(error)
-          }
+            setActive("ADD MEMBERS")
+            setIsScraping(true)
         } catch (error) {
             alert(error)
         }
+    }
+
+    const addAllRequestedMembers = async () => {
+        try {
+            setIsAdding(false)
+            await axios.post(`https://grtdinterface.onrender.com/add`, { channel_id: ownGroupIds, users: allUsers },
+            { headers: { "Content-Type": "application/json" }})
+            navigate("/add")
+            setIsAdding(true)
+          } catch (error) {
+              alert(error)
+          }
     }
     
 
@@ -102,7 +108,6 @@ function ScrapeModal(props: ScrapProps) {
 
     return (
         <Container>
-            {isScraping?
             <FormLayer>
                 {isFetched?
                     <>
@@ -122,15 +127,15 @@ function ScrapeModal(props: ScrapProps) {
                     :
                     <>
                         <ButtonGroup>
-                        {types.map(type => (
-                        <Tab
-                            key={type}
-                            active={active === type}
-                            onClick={() => setActive(type)}
-                        >
-                            {type}
-                        </Tab>
-                        ))}
+                            {types.map(type => (
+                                <Tab
+                                    key={type}
+                                    active={active === type}
+                                    onClick={() => setActive(type)}
+                                >
+                                    {type}
+                                </Tab>
+                            ))}
                         </ButtonGroup>
                         {active === 'SCRAPE MEMBERS' &&
                         <ScrapMembers>
@@ -148,8 +153,8 @@ function ScrapeModal(props: ScrapProps) {
                                     </label>
                                 </StyledInput>
                             ))}
-                            <SubmitButton onClick={() => setActive("ADD MEMBERS")}>
-                                SCRAP SELECTED GROUP
+                            <SubmitButton onClick={scrapeAllMembers}>
+                                {isScraping? "SCRAP SELECTED GROUP" : "SCRAPING..."}
                             </SubmitButton>
                         </ScrapMembers>
                         }
@@ -170,16 +175,13 @@ function ScrapeModal(props: ScrapProps) {
                                 </StyledInput>
                             ))}
                             <SubmitButton onClick={addAllRequestedMembers}>
-                                ADD TO SELECTED GROUP
+                                {isAdding? "ADD TO SELECTED GROUP" : "ADDING..."}
                             </SubmitButton>
                         </AddMembers>
                         }
                     </>
                 }
             </FormLayer>
-            :
-            <Scrapping isFinalLoading={isFinalApiLoading} isLoading = {isFinalLoading}/>
-            }
         </Container>
 )}
 

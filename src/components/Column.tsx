@@ -25,7 +25,7 @@ const SColumn = styled.div<IColumnStyleProps>`
 `
 
 const Column = (props: IColumnProps) => {
-  const { children, spanHeight, maxWidth, center } = props
+  const { children } = props
   return (
     <SColumn
       {...props}

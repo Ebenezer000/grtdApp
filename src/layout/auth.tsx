@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
 type SetupProps = {
@@ -66,16 +66,6 @@ margin: 0 auto;
 width: auto
 height:60%;
 border-radius: 4%;
-`
-
-const StyledHolder = styled.div`
-margin: 20px 0px;
-border: none;
-padding: 5px 40px;
-text-align: center;
-border-radius: 10px
-font-family: monospace;
-font-size: 25px;
 `
 
 const ScrapMembers = styled.div`

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type SetupProps = {
   setPhoneNumber: (phoneNumber: string ) => void
@@ -12,7 +12,6 @@ type SetupProps = {
 
 function SetupModal(props: SetupProps) {
   const navigate = useNavigate()
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const savePhoneNumber = async () => {
