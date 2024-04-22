@@ -19,9 +19,13 @@ function SetupModal(props: SetupProps) {
       setIsLoading(true)
       const response = await axios.post(`https://grtdinterface.onrender.com/auth`, { phone: props.phoneNumber },
         { headers: { "Content-Type": "application/json" }})
-        navigate("/auth")
-        setIsLoading(false)
-        console.log(response)
+        if (response?.data == "False"){
+          navigate("/scrape")
+          setIsLoading(false)
+        }else{
+          navigate("/auth")
+          setIsLoading(false)
+        }
     } catch (error: any) {
       console.log(error)
       alert(error?.response?.data)
