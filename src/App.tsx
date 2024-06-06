@@ -1,75 +1,57 @@
-import { useState } from 'react'
-import styled from 'styled-components'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import SetupModal from './layout/setup';
-import AuthModal from './layout/auth';
-import ScrapeModal from './layout/scraper';
-import AddMembers from './layout/addMembers';
-import Column from './components/Column';
-import Wrapper from './components/Wrapper';
-import Header from './components/Header';
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
+import { WagmiProvider } from 'wagmi'
+import { createWeb3Modal } from '@web3modal/wagmi/react'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+import { avalanche, polygon, mainnet, bsc, base, optimism } from 'wagmi/chains'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+import Home from './layout/Home';
+import Header from './component/header';
+import Footer from './component/footer';
+import Miner from './layout/Miner';
 
-function App(){
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [authCode, setAuthCode] = useState("");
+const queryClient = new QueryClient()
 
+const projectId = 'bf498fa8c97551e659b32fbdfe12fbe2'
+
+const metadata = {
+  name: 'Randy',
+  description: 'Random crypto app',
+  url: 'https://web3modal.com', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
+
+const chains = [mainnet, bsc, polygon, avalanche, optimism, base ] as const
+const config = defaultWagmiConfig({
+  chains,
+  projectId,
+  metadata,
+})
+
+// 3. Create modal
+createWeb3Modal({
+  wagmiConfig: config,
+  projectId,
+  enableAnalytics: true, // Optional - defaults to your Cloud configuration
+  enableOnramp: true // Optional - false as default
+})
+
+export default function App() {
   return (
-    <SLayout>
-        <Column maxWidth={1000} spanHeight>
-            <Router>
-                <Header
-                />
-                <SContent>
-                    <SLanding center>
-                            <Routes>
-                                <Route path="/" element={
-                                    <SetupModal 
-                                        phoneNumber={phoneNumber}
-                                        setPhoneNumber={setPhoneNumber}
-                                    />}
-                                />
-                                <Route path="/auth" element={
-                                    <AuthModal
-                                        phoneNumber={phoneNumber}
-                                        setExternalAuthCode={setAuthCode}
-
-                                    />}
-                                />
-                                <Route path="/scrape" element={
-                                    <ScrapeModal
-                                        phone_number={phoneNumber}
-                                        authCode={authCode}
-                                    />}
-                                />
-                                <Route path="/add" element={
-                                    <AddMembers
-                                    />}
-                                />
-                            </Routes>
-                    </SLanding>
-                </SContent>
-            </Router>
-        </Column>
-    </SLayout>
-)}
-
-const SLayout = styled.div`
-  position: relative;
-  background-color: #EBEBEB;
-  width: 100%;
-  min-height: 100vh;
-  text-align: center;
-`;
-
-const SContent = styled(Wrapper)`
-  width: 100%;
-  height: 100%;
-  padding: 0 16px;
-`;
-
-const SLanding = styled(Column)`
-  height: 600px;
-`;
-
-export default App;
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <div className="body_wrap">
+          <Router>
+            <Header/>
+              <Routes>
+                <Route path='/' element={<Home/>}></Route>
+                <Route path='/miner' element={<Miner/>}></Route>
+              </Routes>
+            <Footer/>
+          </Router>
+        </div>
+      </QueryClientProvider>
+    </WagmiProvider>
+    
+  )
+}

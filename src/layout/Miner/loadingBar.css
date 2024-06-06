@@ -1,0 +1,15 @@
+/* src/LoadingBar.css */
+#loading-container {
+    width: 80%;
+    background-color: #f3f3f3;
+    margin: 20px auto;
+    padding: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #loading-bar {
+    height: 10px;
+    background-color: #2DD98F;
+    transition: width 0.4s ease;
+  }
+  
